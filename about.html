@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hub | About</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">MC HUB</div>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburgerBtn">&#9776;</div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-header">
+            <h1>About Minecraft Hub</h1>
+            <p>Fan-made community portal for all Minecraft players</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Our Mission</h2>
+                <p>Minecraft Hub was created by long-time Minecraft players to unite builders, redstone engineers, modders, server owners and casual fans on one simple website.</p>
+                <p>We showcase outstanding player builds, share mod installation guides, highlight shaders and texture packs, and help users find active Java & Bedrock Edition community servers.</p>
+                <p>This project is fully fan-run and not affiliated with Mojang Studios or Microsoft. Our goal is to celebrate the creativity that makes Minecraft one of the best-selling games of all time.</p>
+                <h2>Project Background</h2>
+                <p>This website was built as a CS50x final project using pure HTML, external CSS and vanilla JavaScript, demonstrating responsive web design and client-side interactivity.</p>
+            </div>
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1587573089734-599820d84284" alt="Minecraft scenic landscape">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
