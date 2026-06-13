@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hub | Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">MC HUB</div>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburgerBtn">&#9776;</div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to Minecraft Hub</h1>
+        <p>Explore builds, servers, mods, texture packs & community creations for the best sandbox game ever made. Build, survive, explore & create without limits!</p>
+        <a href="gallery.html" class="btn">View Build Gallery</a>
+    </section>
+
+    <section class="features">
+        <h2>What We Offer</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Amazing Builds</h3>
+                <p>Castles, cities, fantasy realms, redstone contraptions & massive survival bases curated from top MC builders worldwide.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Mod & Resource Packs</h3>
+                <p>Discover quality mods, shaders, texture packs to completely transform your Minecraft gameplay experience.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Community Servers</h3>
+                <p>Find survival, creative, minigame & RPG servers to join and play with thousands of fellow Minecrafters.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
