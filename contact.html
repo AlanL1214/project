@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hub | Contact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">MC HUB</div>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="hamburger" id="hamburgerBtn">&#9776;</div>
+    </nav>
+
+    <div class="contact-wrap">
+        <div class="contact-head">
+            <h1>Contact Us</h1>
+            <p>Send us messages about builds, servers or suggestions</p>
+        </div>
+        <form class="contact-form" id="contactForm">
+            <input type="text" id="name" placeholder="Your Full Name">
+            <p class="error-text" id="nameErr">Please enter your name</p>
+
+            <input type="email" id="email" placeholder="Your Email Address">
+            <p class="error-text" id="emailErr">Enter a valid email address</p>
+
+            <textarea id="message" rows="6" placeholder="Write your message here..."></textarea>
+            <p class="error-text" id="msgErr">Message cannot be empty</p>
+
+            <button type="submit" class="btn submit-btn">Send Message</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+
+        const form = document.getElementById('contactForm');
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const message = document.getElementById('message');
+        const nameErr = document.getElementById('nameErr');
+        const emailErr = document.getElementById('emailErr');
+        const msgErr = document.getElementById('msgErr');
+
+        form.addEventListener('submit', (e) => {
+            let isValid = true;
+            e.preventDefault();
+
+            nameErr.style.display = 'none';
+            emailErr.style.display = 'none';
+            msgErr.style.display = 'none';
+
+            if(name.value.trim() === ''){
+                nameErr.style.display = 'block';
+                isValid = false;
+            }
+            if(!/^\S+@\S+\.\S+$/.test(email.value)){
+                emailErr.style.display = 'block';
+                isValid = false;
+            }
+            if(message.value.trim() === ''){
+                msgErr.style.display = 'block';
+                isValid = false;
+            }
+
+            if(isValid){
+                alert('Message sent successfully! (Client-side demo only)');
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
