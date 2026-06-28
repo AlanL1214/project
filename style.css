@@ -55,7 +55,7 @@ nav {
 .hero {
     height: 88vh;
     background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-    url('https://images.unsplash.com/photo-1627856015024-9e98011f9a49') center/cover no-repeat;
+    url('https://assetsio.gnwcdn.com/treehouse-with-leafy-roof.jpg?width=1200&height=630&fit=crop&enable=upscale&auto=webp') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
