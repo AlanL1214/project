@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Set your login credentials here
 $correctUser = "admin";
 $correctPass = "cs50minecraft";
 
