@@ -1,11 +1,9 @@
 <?php
 session_start();
-
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("Location: login.php");
     exit();
 }
-
 $allMessages = file_get_contents("messages.txt");
 ?>
 <!DOCTYPE html>
@@ -24,6 +22,7 @@ $allMessages = file_get_contents("messages.txt");
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="login.php">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
@@ -31,7 +30,7 @@ $allMessages = file_get_contents("messages.txt");
     <div class="contact-wrap" style="max-width:900px;margin:3rem auto;padding:2rem;">
         <div class="contact-head">
             <h1>All Contact Submissions</h1>
-            <a href="login.php?logout=1" style="color:#00aaff;">Log Out</a>
+            <a href="login.php" style="color:#00aaff;">Log Out</a>
         </div>
         <pre style="white-space:pre-wrap;background:#111;color:#eee;padding:1.5rem;border-radius:8px;line-height:1.6;">
 <?= htmlspecialchars($allMessages) ?>
