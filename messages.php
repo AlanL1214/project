@@ -1,12 +1,11 @@
 <?php
 session_start();
-// Block access if not logged in
+
 if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
     header("Location: login.php");
     exit();
 }
 
-// Load all saved messages
 $allMessages = file_get_contents("messages.txt");
 ?>
 <!DOCTYPE html>
