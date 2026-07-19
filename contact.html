@@ -43,7 +43,6 @@
     </footer>
 
     <script>
-        // Mobile nav
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const navMenu = document.getElementById('navMenu');
         hamburgerBtn.addEventListener('click', () => {
@@ -53,7 +52,6 @@
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
 
-        // Contact form save to local storage
         const form = document.getElementById('contactForm');
         const name = document.getElementById('name');
         const email = document.getElementById('email');
@@ -83,14 +81,12 @@
             }
 
             if(isValid){
-                // Create message object with timestamp
                 const newMsg = {
                     time: new Date().toLocaleString(),
                     name: name.value.trim(),
                     email: email.value.trim(),
                     text: message.value.trim()
                 };
-                // Get old messages or empty array
                 let stored = JSON.parse(localStorage.getItem("mcMessages")) || [];
                 stored.push(newMsg);
                 localStorage.setItem("mcMessages", JSON.stringify(stored));
