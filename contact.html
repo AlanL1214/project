@@ -23,14 +23,15 @@
             <h1>Contact Us</h1>
             <p>Send us messages about builds or suggestions</p>
         </div>
-        <form class="contact-form" id="contactForm">
-            <input type="text" id="name" placeholder="Your Full Name">
+        <!-- Form now posts to submit.php instead of JS alert -->
+        <form class="contact-form" id="contactForm" action="submit.php" method="POST">
+            <input type="text" id="name" name="name" placeholder="Your Full Name">
             <p class="error-text" id="nameErr">Please enter your name</p>
 
-            <input type="email" id="email" placeholder="Your Email Address">
+            <input type="email" id="email" name="email" placeholder="Your Email Address">
             <p class="error-text" id="emailErr">Enter a valid email address</p>
 
-            <textarea id="message" rows="6" placeholder="Write your message here..."></textarea>
+            <textarea id="message" name="message" rows="6" placeholder="Write your message here..."></textarea>
             <p class="error-text" id="msgErr">Message cannot be empty</p>
 
             <button type="submit" class="btn submit-btn">Send Message</button>
@@ -51,6 +52,7 @@
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
 
+        // Frontend validation only (still sends to PHP if valid)
         const form = document.getElementById('contactForm');
         const name = document.getElementById('name');
         const email = document.getElementById('email');
@@ -61,7 +63,6 @@
 
         form.addEventListener('submit', (e) => {
             let isValid = true;
-            e.preventDefault();
 
             nameErr.style.display = 'none';
             emailErr.style.display = 'none';
@@ -80,10 +81,7 @@
                 isValid = false;
             }
 
-            if(isValid){
-                alert('Message sent successfully! (Client-side demo only)');
-                form.reset();
-            }
+            if(!isValid) e.preventDefault();
         });
     </script>
 </body>
