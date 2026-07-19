@@ -1,15 +1,12 @@
 <?php
 session_start();
-
 $correctUser = "admin";
 $correctPass = "cs50minecraft";
-
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $inputUser = $_POST["username"];
     $inputPass = $_POST["password"];
-
     if ($inputUser === $correctUser && $inputPass === $correctPass) {
         $_SESSION["loggedIn"] = true;
         header("Location: messages.php");
@@ -35,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="login.php">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
