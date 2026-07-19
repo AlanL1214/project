@@ -14,6 +14,7 @@
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="login.php">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
@@ -23,7 +24,6 @@
             <h1>Contact Us</h1>
             <p>Send us messages about builds or suggestions</p>
         </div>
-        <!-- Form now posts to submit.php instead of JS alert -->
         <form class="contact-form" id="contactForm" action="submit.php" method="POST">
             <input type="text" id="name" name="name" placeholder="Your Full Name">
             <p class="error-text" id="nameErr">Please enter your name</p>
@@ -52,7 +52,6 @@
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
 
-        // Frontend validation only (still sends to PHP if valid)
         const form = document.getElementById('contactForm');
         const name = document.getElementById('name');
         const email = document.getElementById('email');
