@@ -14,7 +14,7 @@
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
-            <a href="login.php">Admin Login</a>
+            <a href="admin.html">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
@@ -24,14 +24,14 @@
             <h1>Contact Us</h1>
             <p>Send us messages about builds or suggestions</p>
         </div>
-        <form class="contact-form" id="contactForm" action="submit.php" method="POST">
-            <input type="text" id="name" name="name" placeholder="Your Full Name">
+        <form class="contact-form" id="contactForm">
+            <input type="text" id="name" placeholder="Your Full Name">
             <p class="error-text" id="nameErr">Please enter your name</p>
 
-            <input type="email" id="email" name="email" placeholder="Your Email Address">
+            <input type="email" id="email" placeholder="Your Email Address">
             <p class="error-text" id="emailErr">Enter a valid email address</p>
 
-            <textarea id="message" name="message" rows="6" placeholder="Write your message here..."></textarea>
+            <textarea id="message" rows="6" placeholder="Write your message here..."></textarea>
             <p class="error-text" id="msgErr">Message cannot be empty</p>
 
             <button type="submit" class="btn submit-btn">Send Message</button>
@@ -43,6 +43,7 @@
     </footer>
 
     <script>
+        // Mobile nav
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const navMenu = document.getElementById('navMenu');
         hamburgerBtn.addEventListener('click', () => {
@@ -52,6 +53,7 @@
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
 
+        // Contact form save to local storage
         const form = document.getElementById('contactForm');
         const name = document.getElementById('name');
         const email = document.getElementById('email');
@@ -61,8 +63,8 @@
         const msgErr = document.getElementById('msgErr');
 
         form.addEventListener('submit', (e) => {
+            e.preventDefault();
             let isValid = true;
-
             nameErr.style.display = 'none';
             emailErr.style.display = 'none';
             msgErr.style.display = 'none';
@@ -80,7 +82,22 @@
                 isValid = false;
             }
 
-            if(!isValid) e.preventDefault();
+            if(isValid){
+                // Create message object with timestamp
+                const newMsg = {
+                    time: new Date().toLocaleString(),
+                    name: name.value.trim(),
+                    email: email.value.trim(),
+                    text: message.value.trim()
+                };
+                // Get old messages or empty array
+                let stored = JSON.parse(localStorage.getItem("mcMessages")) || [];
+                stored.push(newMsg);
+                localStorage.setItem("mcMessages", JSON.stringify(stored));
+
+                alert("Message sent! Go to Admin Login to view submissions.");
+                form.reset();
+            }
         });
     </script>
 </body>
