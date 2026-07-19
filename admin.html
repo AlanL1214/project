@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Minecraft Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-box{max-width:500px;margin:3rem auto;padding:2rem;}
+        .messages-box{max-width:900px;margin:2rem auto;padding:2rem;display:none;}
+        .msg-item{background:#111;color:#eee;padding:1rem;margin:1rem 0;border-radius:6px;white-space:pre-wrap;}
+        .error{color:red;text-align:center;}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">MC HUB</div>
+        <div class="nav-links" id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+            <a href="admin.html">Admin Login</a>
+        </div>
+        <div class="hamburger" id="hamburgerBtn">&#9776;</div>
+    </nav>
+
+    <div class="login-box" id="loginArea">
+        <div class="contact-head">
+            <h1>Admin Login</h1>
+            <p>Enter password to view submitted contact messages</p>
+        </div>
+        <p class="error" id="passError"></p>
+        <form id="loginForm">
+            <input type="password" id="adminPass" placeholder="Enter Admin Password" required style="width:100%;padding:10px;margin:8px 0;">
+            <button type="submit" class="btn submit-btn" style="width:100%;">Unlock Messages</button>
+        </form>
+    </div>
+
+    <div class="messages-box" id="messageArea">
+        <div class="contact-head">
+            <h1>All Contact Submissions</h1>
+            <button id="logoutBtn" class="btn submit-btn">Lock / Logout</button>
+            <button id="clearBtn" class="btn submit-btn" style="background:#c22;">Clear All Messages</button>
+        </div>
+        <div id="messageList"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navMenu.classList.remove('active'));
+        });
+
+        const CORRECT_PASSWORD = "cs50minecraft";
+
+        const loginForm = document.getElementById("loginForm");
+        const adminPass = document.getElementById("adminPass");
+        const passError = document.getElementById("passError");
+        const loginArea = document.getElementById("loginArea");
+        const messageArea = document.getElementById("messageArea");
+        const messageList = document.getElementById("messageList");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const clearBtn = document.getElementById("clearBtn");
+
+        if(localStorage.getItem("adminUnlocked") === "true"){
+            showMessages();
+        }
+
+        loginForm.addEventListener("submit", e => {
+            e.preventDefault();
+            passError.textContent = "";
+            if(adminPass.value === CORRECT_PASSWORD){
+                localStorage.setItem("adminUnlocked", "true");
+                showMessages();
+            } else {
+                passError.textContent = "Wrong password, try again";
+            }
+        });
+
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("adminUnlocked");
+            loginArea.style.display = "block";
+            messageArea.style.display = "none";
+        });
+
+        clearBtn.addEventListener("click", () => {
+            if(confirm("Delete all saved contact messages?")){
+                localStorage.removeItem("mcMessages");
+                renderMessages();
+            }
+        });
+
+        function showMessages(){
+            loginArea.style.display = "none";
+            messageArea.style.display = "block";
+            renderMessages();
+        }
+
+        function renderMessages(){
+            const stored = JSON.parse(localStorage.getItem("mcMessages")) || [];
+            messageList.innerHTML = "";
+            if(stored.length === 0){
+                messageList.innerHTML = "<p style='text-align:center;color:#aaa;'>No messages submitted yet.</p>";
+                return;
+            }
+            stored.forEach(msg => {
+                const div = document.createElement("div");
+                div.className = "msg-item";
+                div.innerText = `Time: ${msg.time}\nName: ${msg.name}\nEmail: ${msg.email}\nMessage: ${msg.text}`;
+                messageList.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
