@@ -261,7 +261,7 @@ nav {
     outline: none;
     border-color: var(--mc-green);
 }
-.submit {
+.submit-btn {
     width: 100%;
     border: none;
     cursor: pointer;
