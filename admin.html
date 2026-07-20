@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Minecraft Hub</title>
+    <title>Admin Panel | Minecraft Hub</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .login-box{max-width:500px;margin:3rem auto;padding:2rem;}
-        .messages-box{max-width:900px;margin:2rem auto;padding:2rem;display:none;}
+        .panel-box{max-width:950px;margin:3rem auto;padding:2rem;}
+        .tab-group{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+        .tab-btn{padding:10px 16px;border:none;background:#4a9c2d;color:white;border-radius:4px;cursor:pointer;}
+        .tab-btn.active{background:#367a20;}
+        .tab-content{display:none;}
+        .tab-content.show{display:block;}
+        .form-item{margin:12px 0;}
+        .form-item input{width:100%;padding:10px;margin-top:6px;border:1px solid #ddd;border-radius:4px;}
+        .err-text{color:#d62828;margin:6px 0;}
+        .success-text{color:#2d9c47;margin:6px 0;}
         .msg-item{background:#111;color:#eee;padding:1rem;margin:1rem 0;border-radius:6px;white-space:pre-wrap;}
-        .error{color:red;text-align:center;}
+        .user-list{background:#f0f0f0;padding:1rem;border-radius:6px;margin:1rem 0;}
     </style>
 </head>
 <body>
@@ -20,36 +28,85 @@
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="chat.html">Community Chat</a>
             <a href="admin.html">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
-
-    <div class="login-box" id="loginArea">
-        <div class="contact-head">
-            <h1>Admin Login</h1>
-            <p>Enter password to view submitted contact messages</p>
+    <div class="panel-box">
+        <div class="tab-group">
+            <button class="tab-btn active" data-tab="loginTab">Login</button>
+            <button class="tab-btn" data-tab="registerTab">Register Account</button>
+            <button class="tab-btn" data-tab="messageTab">View Contact Messages</button>
+            <button class="tab-btn" data-tab="accountTab">Account & Password Manage</button>
         </div>
-        <p class="error" id="passError"></p>
-        <form id="loginForm">
-            <input type="password" id="adminPass" placeholder="Enter Admin Password" required style="width:100%;padding:10px;margin:8px 0;">
-            <button type="submit" class="btn submit-btn" style="width:100%;">Unlock Messages</button>
-        </form>
-    </div>
-
-    <div class="messages-box" id="messageArea">
-        <div class="contact-head">
-            <h1>All Contact Submissions</h1>
-            <button id="logoutBtn" class="btn submit-btn">Lock / Logout</button>
-            <button id="clearBtn" class="btn submit-btn" style="background:#c22;">Clear All Messages</button>
+        <div class="tab-content show" id="loginTab">
+            <h2>User Login</h2>
+            <p class="err-text" id="loginErr"></p>
+            <form id="loginForm">
+                <div class="form-item">
+                    <label>Username</label>
+                    <input type="text" id="loginUser" required>
+                </div>
+                <div class="form-item">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" required>
+                </div>
+                <button class="btn submit-btn" type="submit">Sign In</button>
+            </form>
         </div>
-        <div id="messageList"></div>
+        <div class="tab-content" id="registerTab">
+            <h2>Create New Account</h2>
+            <p class="err-text" id="regErr"></p>
+            <p class="success-text" id="regSuccess"></p>
+            <form id="regForm">
+                <div class="form-item">
+                    <label>New Username</label>
+                    <input type="text" id="regUser" required>
+                </div>
+                <div class="form-item">
+                    <label>New Password</label>
+                    <input type="password" id="regPass" required>
+                </div>
+                <div class="form-item">
+                    <label>Confirm Password</label>
+                    <input type="password" id="regPass2" required>
+                </div>
+                <button class="btn submit-btn" type="submit">Register</button>
+            </form>
+        </div>
+        <div class="tab-content" id="messageTab">
+            <h2>All Contact Submissions</h2>
+            <button id="clearMsgBtn" class="btn submit-btn" style="background:#c22;">Clear All Messages</button>
+            <div id="messageList"></div>
+        </div>
+        <div class="tab-content" id="accountTab">
+            <h2>Change Account Password</h2>
+            <p class="err-text" id="passErr"></p>
+            <p class="success-text" id="passSuccess"></p>
+            <form id="passForm">
+                <div class="form-item">
+                    <label>Current Username</label>
+                    <input type="text" id="currUser" required>
+                </div>
+                <div class="form-item">
+                    <label>Current Password</label>
+                    <input type="password" id="currPass" required>
+                </div>
+                <div class="form-item">
+                    <label>New Password</label>
+                    <input type="password" id="newPass" required>
+                </div>
+                <button class="btn submit-btn" type="submit">Update Password</button>
+            </form>
+            <hr style="margin:2rem 0;">
+            <h3>All Registered Accounts</h3>
+            <div class="user-list" id="userList"></div>
+        </div>
     </div>
-
     <footer>
         <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
     </footer>
-
     <script>
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const navMenu = document.getElementById('navMenu');
@@ -59,66 +116,127 @@
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
-
-        const CORRECT_PASSWORD = "cs50minecraft";
-
-        const loginForm = document.getElementById("loginForm");
-        const adminPass = document.getElementById("adminPass");
-        const passError = document.getElementById("passError");
-        const loginArea = document.getElementById("loginArea");
-        const messageArea = document.getElementById("messageArea");
-        const messageList = document.getElementById("messageList");
-        const logoutBtn = document.getElementById("logoutBtn");
-        const clearBtn = document.getElementById("clearBtn");
-
-        if(localStorage.getItem("adminUnlocked") === "true"){
-            showMessages();
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('show'));
+                btn.classList.add('active');
+                const targetTab = btn.dataset.tab;
+                document.getElementById(targetTab).classList.add('show');
+                if(targetTab === "messageTab") renderMessages();
+                if(targetTab === "accountTab") renderUserList();
+            });
+        });
+        function getUsers(){
+            return JSON.parse(localStorage.getItem("mcUsers")) || [];
         }
-
-        loginForm.addEventListener("submit", e => {
+        function saveUsers(arr){
+            localStorage.setItem("mcUsers", JSON.stringify(arr));
+        }
+        function getMessages(){
+            return JSON.parse(localStorage.getItem("mcMessages")) || [];
+        }
+        const loginForm = document.getElementById("loginForm");
+        const loginErr = document.getElementById("loginErr");
+        loginForm.addEventListener('submit', e => {
             e.preventDefault();
-            passError.textContent = "";
-            if(adminPass.value === CORRECT_PASSWORD){
-                localStorage.setItem("adminUnlocked", "true");
-                showMessages();
-            } else {
-                passError.textContent = "Wrong password, try again";
+            loginErr.textContent = "";
+            const u = document.getElementById("loginUser").value.trim();
+            const p = document.getElementById("loginPass").value.trim();
+            const users = getUsers();
+            const match = users.find(item => item.username === u && item.password === p);
+            if(match){
+                localStorage.setItem("currentUser", u);
+                loginErr.textContent = "";
+                alert("Login successful, your name will show in chat");
+            }else{
+                loginErr.textContent = "Wrong username or password";
             }
         });
-
-        logoutBtn.addEventListener("click", () => {
-            localStorage.removeItem("adminUnlocked");
-            loginArea.style.display = "block";
-            messageArea.style.display = "none";
+        const regForm = document.getElementById("regForm");
+        const regErr = document.getElementById("regErr");
+        const regSuccess = document.getElementById("regSuccess");
+        regForm.addEventListener('submit', e => {
+            e.preventDefault();
+            regErr.textContent = "";
+            regSuccess.textContent = "";
+            const u = document.getElementById("regUser").value.trim();
+            const p1 = document.getElementById("regPass").value.trim();
+            const p2 = document.getElementById("regPass2").value.trim();
+            const users = getUsers();
+            if(u === "" || p1 === ""){
+                regErr.textContent = "Username and password cannot be empty";
+                return;
+            }
+            if(p1 !== p2){
+                regErr.textContent = "Two passwords do not match";
+                return;
+            }
+            const exist = users.find(item => item.username === u);
+            if(exist){
+                regErr.textContent = "This username already exists";
+                return;
+            }
+            users.push({username:u,password:p1});
+            saveUsers(users);
+            regSuccess.textContent = "Account registered successfully";
+            regForm.reset();
         });
-
-        clearBtn.addEventListener("click", () => {
-            if(confirm("Delete all saved contact messages?")){
+        const passForm = document.getElementById("passForm");
+        const passErr = document.getElementById("passErr");
+        const passSuccess = document.getElementById("passSuccess");
+        passForm.addEventListener('submit', e => {
+            e.preventDefault();
+            passErr.textContent = "";
+            passSuccess.textContent = "";
+            const cu = document.getElementById("currUser").value.trim();
+            const cp = document.getElementById("currPass").value.trim();
+            const np = document.getElementById("newPass").value.trim();
+            const users = getUsers();
+            const target = users.find(item => item.username === cu && item.password === cp);
+            if(!target){
+                passErr.textContent = "Current username or password incorrect";
+                return;
+            }
+            target.password = np;
+            saveUsers(users);
+            passSuccess.textContent = "Password changed successfully";
+            passForm.reset();
+        });
+        function renderUserList(){
+            const listBox = document.getElementById("userList");
+            const users = getUsers();
+            if(users.length === 0){
+                listBox.innerHTML = "<p>No registered accounts yet</p>";
+                return;
+            }
+            let html = "";
+            users.forEach(item => {
+                html += `<p>Username: ${item.username}</p>`;
+            });
+            listBox.innerHTML = html;
+        }
+        function renderMessages(){
+            const listBox = document.getElementById("messageList");
+            const data = getMessages();
+            if(data.length === 0){
+                listBox.innerHTML = "<p style='text-align:center;color:#aaa;'>No messages submitted yet.</p>";
+                return;
+            }
+            let html = "";
+            data.forEach(msg => {
+                html += `<div class="msg-item">Time: ${msg.time}\nName: ${msg.name}\nEmail: ${msg.email}\nMessage: ${msg.text}</div>`;
+            });
+            listBox.innerHTML = html;
+        }
+        document.getElementById("clearMsgBtn").addEventListener('click', () => {
+            if(confirm("Delete all contact messages?")){
                 localStorage.removeItem("mcMessages");
                 renderMessages();
             }
         });
-
-        function showMessages(){
-            loginArea.style.display = "none";
-            messageArea.style.display = "block";
-            renderMessages();
-        }
-
-        function renderMessages(){
-            const stored = JSON.parse(localStorage.getItem("mcMessages")) || [];
-            messageList.innerHTML = "";
-            if(stored.length === 0){
-                messageList.innerHTML = "<p style='text-align:center;color:#aaa;'>No messages submitted yet.</p>";
-                return;
-            }
-            stored.forEach(msg => {
-                const div = document.createElement("div");
-                div.className = "msg-item";
-                div.innerText = `Time: ${msg.time}\nName: ${msg.name}\nEmail: ${msg.email}\nMessage: ${msg.text}`;
-                messageList.appendChild(div);
-            });
-        }
     </script>
 </body>
 </html>
