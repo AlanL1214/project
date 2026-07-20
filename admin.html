@@ -116,21 +116,14 @@
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('show'));
-                btn.classList.add('active');
-                const targetTab = btn.dataset.tab;
-                document.getElementById(targetTab).classList.add('show');
-                if(targetTab === "messageTab") renderMessages();
-                if(targetTab === "accountTab") renderUserList();
-            });
-        });
         function getUsers(){
-            return JSON.parse(localStorage.getItem("mcUsers")) || [];
+            let data = localStorage.getItem("mcUsers");
+            if(!data){
+                let defaultAdmin = [{username:"admin",password:"cs50minecraft"}];
+                localStorage.setItem("mcUsers",JSON.stringify(defaultAdmin));
+                return defaultAdmin;
+            }
+            return JSON.parse(data);
         }
         function saveUsers(arr){
             localStorage.setItem("mcUsers", JSON.stringify(arr));
@@ -237,6 +230,20 @@
                 renderMessages();
             }
         });
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('show'));
+                btn.classList.add('active');
+                const targetTab = btn.dataset.tab;
+                document.getElementById(targetTab).classList.add('show');
+                if(targetTab === "messageTab") renderMessages();
+                if(targetTab === "accountTab") renderUserList();
+            });
+        });
+        getUsers();
     </script>
 </body>
 </html>
