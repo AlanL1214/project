@@ -16,7 +16,6 @@ body {
     background-color: #eef2e9;
     line-height: 1.6;
 }
-
 nav {
     background-color: var(--mc-night);
     padding: 1rem 5%;
@@ -51,7 +50,6 @@ nav {
     color: white;
     cursor: pointer;
 }
-
 .hero {
     height: 88vh;
     background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
@@ -81,12 +79,13 @@ nav {
     font-weight: 600;
     border-radius: 4px;
     transition: 0.3s ease;
+    border:0;
+    cursor:pointer;
 }
 .btn:hover {
     background-color: var(--mc-dark-green);
     transform: translateY(-3px);
 }
-
 .features {
     padding: 6rem 5%;
     text-align: center;
@@ -120,7 +119,6 @@ nav {
 .feature-card p {
     color: #555;
 }
-
 .about-container {
     max-width: 1100px;
     margin: 4rem auto;
@@ -141,7 +139,7 @@ nav {
 }
 .about-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
     align-items: center;
 }
@@ -161,7 +159,6 @@ nav {
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
-
 .gallery-wrap {
     max-width: 1300px;
     margin: 4rem auto;
@@ -212,7 +209,6 @@ nav {
     color: #555;
     font-size: 0.95rem;
 }
-
 .modal {
     display: none;
     position: fixed;
@@ -237,7 +233,6 @@ nav {
     font-size: 40px;
     cursor: pointer;
 }
-
 .contact-wrap {
     max-width: 700px;
     margin: 4rem auto;
@@ -266,7 +261,7 @@ nav {
     outline: none;
     border-color: var(--mc-green);
 }
-.submit-btn {
+.submit {
     width: 100%;
     border: none;
     cursor: pointer;
@@ -276,7 +271,6 @@ nav {
     margin: -0.8rem 0 1rem;
     display: none;
 }
-
 footer {
     background-color: var(--mc-night);
     color: #aaa;
@@ -284,7 +278,6 @@ footer {
     padding: 2rem;
     margin-top: 3rem;
 }
-
 @media(max-width:768px) {
     .hamburger {
         display: block;
