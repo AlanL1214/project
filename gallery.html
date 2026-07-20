@@ -14,11 +14,11 @@
             <a href="about.html">About</a>
             <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact</a>
+            <a href="chat.html">Community Chat</a>
             <a href="admin.html">Admin Login</a>
         </div>
         <div class="hamburger" id="hamburgerBtn">&#9776;</div>
     </nav>
-
     <div class="gallery-wrap">
         <div class="gallery-head">
             <h1>Minecraft Build Gallery</h1>
@@ -48,16 +48,13 @@
             </div>
         </div>
     </div>
-
     <div class="modal" id="imgModal">
         <span class="close-modal">&times;</span>
         <img class="modal-img" id="fullImg">
     </div>
-
     <footer>
         <p>&copy; 2026 Minecraft Hub | Minecraft belongs to Mojang Studios</p>
     </footer>
-
     <script>
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const navMenu = document.getElementById('navMenu');
@@ -67,12 +64,10 @@
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => navMenu.classList.remove('active'));
         });
-
         const modal = document.getElementById('imgModal');
         const fullImg = document.getElementById('fullImg');
         const closeModal = document.querySelector('.close-modal');
         const galleryImages = document.querySelectorAll('.gallery-card img');
-
         galleryImages.forEach(img => {
             img.addEventListener('click', () => {
                 modal.style.display = 'flex';
